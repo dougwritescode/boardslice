@@ -18,7 +18,7 @@ parser.add_argument('-rl', '--reverselines', dest='l', help='Reverse each line o
 def main():
 	args = parser.parse_args()
 	if args.s != None:
-		c = array([array(x.split(args.s)) for x in paste().split('\n')])
+		c = array([array(x.split(args.s.decode("string_escape"))) for x in paste().split('\n')])
 	else:
 		c = array([array(x.split()) for x in paste().split('\n')])
 	if args.d == 'num':
@@ -31,17 +31,17 @@ def main():
 	except IndexError:
 		print "Your input is not all the same length!"
 		print "Check the formatting!"
-	lines = [args.j.join(a) for a in c]
+	lines = [args.j.decode("string_escape").join(a) for a in c]
 	ll = len(lines)
 	if args.r:
 		lines = lines[::-1]
 	if args.l:
 		lines = [x[::-1] for x in lines]
 	if args.e != None:
-		lines = [str(args.e + x) + args.j + lines[x] for x in range(ll)]
+		lines = [str(args.e + x) + args.j.decode("string_escape") + lines[x] for x in range(ll)]
 	if args.d != None:
-		lines = [str(args.d - x) + args.j + lines[x] for x in range(ll)]
-	copy(args.lj.join(lines))
+		lines = [str(args.d - x) + args.j.decode("string_escape") + lines[x] for x in range(ll)]
+	copy(args.lj.decode("string_escape").join(lines))
 		
 if __name__=="__main__":
 	main()
